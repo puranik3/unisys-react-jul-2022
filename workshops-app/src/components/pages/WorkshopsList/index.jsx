@@ -19,21 +19,36 @@ const WorkshopsList = ( { details } ) => {
     // console.log( 'setWorkshops = ', setWorkshops ); // setter -> function
 
     // if we pass empty array (i.e. []) as the 2nd argument to useEffect, the "side-effect" runs after firts component render
-    useEffect(
-        () => { // the "side-effect"
-            getWorkshops()
-                .then(workshops => {
-                    setWorkshops( workshops );
-                })
-                .catch(error => {
-                    setError( error );
-                })
-                .finally(() => {
-                    setLoading( false );
-                });
-        },
-        []
-    );
+    // useEffect(
+    //     () => { // the "side-effect"
+    //         getWorkshops()
+    //             .then(workshops => {
+    //                 setWorkshops( workshops );
+    //             })
+    //             .catch(error => {
+    //                 setError( error );
+    //             })
+    //             .finally(() => {
+    //                 setLoading( false );
+    //             });
+    //     },
+    //     []
+    // );
+
+    useEffect(() => {
+        const fetchWorkshops = async () => {
+            try {
+                const workshops = await getWorkshops();
+                setWorkshops( workshops );
+            } catch( error ) {
+                setError( error );
+            } finally {
+                setLoading( false );
+            }
+        };
+
+        fetchWorkshops();
+    })
 
     // <></> -> is React.Fragment
     return (
