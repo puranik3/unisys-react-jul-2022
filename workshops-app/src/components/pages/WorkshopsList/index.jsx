@@ -33,7 +33,20 @@ const WorkshopsList = ( { details } ) => {
             }
             {
                 workshops.length !== 0 && (
-                    <div>List of workshops. Number of workshops {workshops.length}.</div>
+                    <>
+                        <h1>List of workshops</h1>
+                        <hr />
+                        <ol>
+                        {/* Use array idx (second argument to function passed to map() as last resort */}
+                        {
+                            workshops.map(
+                                workshop => (
+                                    <li key={workshop.id}>{workshop.name}</li>
+                                )
+                            )
+                        }
+                        </ol>
+                    </>
                 )
             }
         </>
