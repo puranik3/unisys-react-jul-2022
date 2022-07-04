@@ -1,8 +1,11 @@
 // useState is one of the "hooks" of React
 // "hooks" can be used ONLY in function components (class components do not need them and are not allowed to use them)
 import React, { useState, useEffect } from 'react';
-import { Spinner, Alert } from 'react-bootstrap';
-import { getWorkshops } from '../../../services/workshops';
+import { Spinner, Alert, Button } from 'react-bootstrap';
+import {
+    getWorkshops,
+    getWorkshopsForPage
+} from '../../../services/workshops';
 
 // Shortcut to create function component code - sfc
 // { details } -> pick props.details (1st argument is props) and set it to a variable called details
@@ -14,6 +17,7 @@ const WorkshopsList = ( { details } ) => {
     const [ workshops, setWorkshops ] = useState( [] );
     const [ loading, setLoading ] = useState( true );
     const [ error, setError ] = useState( null );
+    const [ page, setPage ] = useState( 1 );
 
     // console.log( 'workshops = ', workshops ); // data -> []
     // console.log( 'setWorkshops = ', setWorkshops ); // setter -> function
@@ -35,10 +39,19 @@ const WorkshopsList = ( { details } ) => {
     //     []
     // );
 
+    const previousPage = () => {
+        setPage( page - 1 );
+    };
+    
+    const nextPage = () => {
+        setPage( page + 1 );
+    };
+
+    // this side-effect runs on first load AND change to page state
     useEffect(() => {
-        const fetchWorkshops = async () => {
+        const fetchWorkshopsForPage = async () => {
             try {
-                const workshops = await getWorkshops();
+                const workshops = await getWorkshopsForPage( page );
                 setWorkshops( workshops );
             } catch( error ) {
                 setError( error );
@@ -47,8 +60,9 @@ const WorkshopsList = ( { details } ) => {
             }
         };
 
-        fetchWorkshops();
-    }, []);
+        setLoading( true );
+        fetchWorkshopsForPage();
+    }, [ page ]); // runs ONLY on page change 
 
     // <></> -> is React.Fragment
     return (
@@ -76,6 +90,8 @@ const WorkshopsList = ( { details } ) => {
                     <>
                         <h1>List of workshops</h1>
                         <hr />
+                        <Button onClick={previousPage} size="sm me-2">Previous</Button>
+                        <Button onClick={nextPage} size="sm">Next</Button>
                         <ol>
                         {/* Use array idx (second argument to function passed to map() as last resort */}
                         {

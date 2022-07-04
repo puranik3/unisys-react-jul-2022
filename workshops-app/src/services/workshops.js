@@ -15,6 +15,17 @@ const getWorkshops = async () => {
     return response.data;
 };
 
+// gets the workshops for page number passed
+const getWorkshopsForPage = async ( page ) => {
+    const response = await axios.get( `${baseUrl}/workshops`, {
+        params: {
+            _page: page
+        }
+    });
+    return response.data;
+};
+
 export {
-    getWorkshops
+    getWorkshops,
+    getWorkshopsForPage
 };
