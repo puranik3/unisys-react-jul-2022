@@ -48,7 +48,7 @@ const WorkshopsList = ( { details } ) => {
         };
 
         fetchWorkshops();
-    })
+    }, []);
 
     // <></> -> is React.Fragment
     return (
