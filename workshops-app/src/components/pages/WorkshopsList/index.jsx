@@ -1,6 +1,7 @@
 // useState is one of the "hooks" of React
 // "hooks" can be used ONLY in function components (class components do not need them and are not allowed to use them)
 import React, { useState, useEffect } from 'react';
+import { Spinner, Alert } from 'react-bootstrap';
 import { getWorkshops } from '../../../services/workshops';
 
 // Shortcut to create function component code - sfc
@@ -12,6 +13,7 @@ const WorkshopsList = ( { details } ) => {
     // workshops -> data (1st item in the array)
     const [ workshops, setWorkshops ] = useState( [] );
     const [ loading, setLoading ] = useState( true );
+    const [ error, setError ] = useState( null );
 
     // console.log( 'workshops = ', workshops ); // data -> []
     // console.log( 'setWorkshops = ', setWorkshops ); // setter -> function
@@ -22,7 +24,11 @@ const WorkshopsList = ( { details } ) => {
             getWorkshops()
                 .then(workshops => {
                     setWorkshops( workshops );
-                }).finally(() => {
+                })
+                .catch(error => {
+                    setError( error );
+                })
+                .finally(() => {
                     setLoading( false );
                 });
         },
@@ -34,11 +40,24 @@ const WorkshopsList = ( { details } ) => {
         <>
             {
                 loading && (
-                    <div>Loading..</div>
+                    <div className="d-flex justify-content-center">
+                        <Spinner animation="border" role="status">
+                            <span className="visually-hidden">
+                                Loading...
+                            </span>
+                        </Spinner>
+                    </div>
                 )
             }
             {
-                workshops.length !== 0 && (
+                !loading && error && (
+                    <Alert variant="danger">
+                        {error.message}
+                    </Alert>
+                )
+            }
+            {
+                !loading && !error && (
                     <>
                         <h1>List of workshops</h1>
                         <hr />
