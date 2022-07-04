@@ -11,14 +11,20 @@ const WorkshopsList = ( { details } ) => {
     // [ data, setter function for the data ]
     // workshops -> data (1st item in the array)
     const [ workshops, setWorkshops ] = useState( [] );
+    const [ loading, setLoading ] = useState( true );
+
     // console.log( 'workshops = ', workshops ); // data -> []
     // console.log( 'setWorkshops = ', setWorkshops ); // setter -> function
 
     // if we pass empty array (i.e. []) as the 2nd argument to useEffect, the "side-effect" runs after firts component render
     useEffect(
         () => { // the "side-effect"
-            const workshops = getWorkshops();
-            setWorkshops( workshops );
+            getWorkshops()
+                .then(workshops => {
+                    setWorkshops( workshops );
+                }).finally(() => {
+                    setLoading( false );
+                });
         },
         []
     );
@@ -27,7 +33,7 @@ const WorkshopsList = ( { details } ) => {
     return (
         <>
             {
-                workshops.length === 0 && (
+                loading && (
                     <div>Loading..</div>
                 )
             }
