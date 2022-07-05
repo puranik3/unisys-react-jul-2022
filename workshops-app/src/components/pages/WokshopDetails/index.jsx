@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import { Alert, Row, Col, Image } from 'react-bootstrap';
 
 import { getWorkshopById } from '../../../services/workshops';
 
@@ -36,12 +37,21 @@ const WorkshopDetails = () => {
             }
             {
                 !loading && error && (
-                    <div>{error.message}</div>
+                    <Alert variant="danger">{error.message}</Alert>
                 )
             }
             {
                 !loading && !error && workshop && (
-                    <div>{workshop.name}</div>
+                    <div>
+                        <h1>{workshop.name}</h1>
+                        <hr />
+                        <Row>
+                            <Col xs={12} lg={4}>
+                                <Image src={workshop.imageUrl} fluid />
+                            </Col>
+                            <Col xs={12} lg={8} dangerouslySetInnerHTML={{ __html: workshop.description }}></Col>
+                        </Row>
+                    </div>
                 )
             }
         </div>

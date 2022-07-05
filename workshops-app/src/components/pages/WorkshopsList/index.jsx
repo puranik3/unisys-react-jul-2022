@@ -128,7 +128,7 @@ const WorkshopsList = ({ details, cols }) => {
                                         <Card.Title>{workshop.name}</Card.Title>
                                         {
                                             show ? (
-                                                <Card.Text>
+                                                <>
                                                     <div>
                                                         <Moment format={format}>
                                                             {workshop.startDate}
@@ -141,7 +141,7 @@ const WorkshopsList = ({ details, cols }) => {
                                                     <div>
                                                         {workshop.time}
                                                     </div>
-                                                </Card.Text>
+                                                </>
                                             ) : (
                                                 <span>Some details are hidden</span>
                                             )
