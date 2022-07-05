@@ -4,6 +4,8 @@ import React, { useState, useEffect } from "react";
 import { Spinner, Alert, Button, Row, Col, Card } from "react-bootstrap";
 import { getWorkshops, getWorkshopsForPage } from "../../../services/workshops";
 
+import './index.css';
+
 // Shortcut to create function component code - sfc
 // { details } -> pick props.details (1st argument is props) and set it to a variable called details
 const WorkshopsList = ({ details }) => {
@@ -87,11 +89,11 @@ const WorkshopsList = ({ details }) => {
                     <Row xs={1} lg={3}>
                         {/* Use array idx (second argument to function passed to map() as last resort */}
                         {workshops.map((workshop) => (
-                            <Col key={workshop.id}>
-                                <Card>
+                            <Col key={workshop.id} className="d-flex align-items-stretch my-3">
+                                <Card className="p-4 card-workshop">
                                     <Card.Img
                                         variant="top"
-                                        src="holder.js/100px180"
+                                        src={workshop.imageUrl}
                                     />
                                     <Card.Body>
                                         <Card.Title>{workshop.name}</Card.Title>
