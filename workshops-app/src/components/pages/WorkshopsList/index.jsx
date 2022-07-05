@@ -1,12 +1,11 @@
 // useState is one of the "hooks" of React
 // "hooks" can be used ONLY in function components (class components do not need them and are not allowed to use them)
 import React, { useState, useEffect } from "react";
-import { Spinner, Alert, Button, Row, Col, Card } from "react-bootstrap";
-import Moment from 'react-moment';
-import { Link } from 'react-router-dom';
+import { Spinner, Alert, Button, Row, Col } from "react-bootstrap";
 import { getWorkshops, getWorkshopsForPage } from "../../../services/workshops";
 
 import './index.css';
+import WorkshopItem from "./WorkshopItem";
 
 // Shortcut to create function component code - sfc
 // { details } -> pick props.details (1st argument is props) and set it to a variable called details
@@ -20,8 +19,6 @@ const WorkshopsList = ({ details, cols }) => {
     const [error, setError] = useState(null);
     const [page, setPage] = useState(1);
     const [ show, setShow ] = useState( details );
-
-    const format = "DD-MM-yyyy";
 
     // console.log( 'workshops = ', workshops ); // data -> []
     // console.log( 'setWorkshops = ', setWorkshops ); // setter -> function
@@ -83,10 +80,6 @@ const WorkshopsList = ({ details, cols }) => {
     // <></> -> is React.Fragment
     return (
         <>
-            {"hello"}
-            {1}
-            {<div>Hello</div>}
-            {[<div>Hello</div>, 1, "hello"]}
             {loading && (
                 <div className="d-flex justify-content-center">
                     <Spinner animation="border" role="status">
@@ -119,39 +112,10 @@ const WorkshopsList = ({ details, cols }) => {
                         {/* Use array idx (second argument to function passed to map() as last resort */}
                         {workshops.map((workshop) => (
                             <Col key={workshop.id} className="d-flex align-items-stretch my-3">
-                                <Card
-                                    className="p-4 card-workshop text-reset text-decoration-none"
-                                    as={Link}
-                                    to={`/workshops/${workshop.id}`}
-                                >
-                                    <Card.Img
-                                        variant="top"
-                                        src={workshop.imageUrl}
-                                    />
-                                    <Card.Body>
-                                        <Card.Title>{workshop.name}</Card.Title>
-                                        {
-                                            show ? (
-                                                <>
-                                                    <div>
-                                                        <Moment format={format}>
-                                                            {workshop.startDate}
-                                                        </Moment>
-                                                        {" - "}
-                                                        <Moment format={format}>
-                                                            {workshop.endDate}
-                                                        </Moment>
-                                                    </div>
-                                                    <div>
-                                                        {workshop.time}
-                                                    </div>
-                                                </>
-                                            ) : (
-                                                <span>Some details are hidden</span>
-                                            )
-                                        }
-                                    </Card.Body>
-                                </Card>
+                                <WorkshopItem
+                                    workshop={workshop}
+                                    show={show}
+                                />
                             </Col>
                         ))}
                     </Row>
