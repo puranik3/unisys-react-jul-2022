@@ -75,6 +75,10 @@ const WorkshopsList = ({ details, cols }) => {
         fetchWorkshopsForPage();
     }, [page]); // runs ONLY on page change
 
+    useEffect(() => {
+        setShow( details );
+    }, [details]);
+
     // <></> -> is React.Fragment
     return (
         <>
