@@ -70,13 +70,17 @@ const WorkshopDetails = () => {
                                 </Col>
                                 <Col>
                                     <div>
-                                        {/* EXERCISE: display check / times icon based on workshop.modes.inPerson */}
-                                        <FontAwesomeIcon icon={faCheck} />
+                                        {
+                                            workshop.modes.inPerson ? (
+                                                <FontAwesomeIcon icon={faCheck} />
+                                            ) : (
+                                                <FontAwesomeIcon icon={faTimes} />
+                                            )
+                                        }
                                         <span className="ms-2">In-Person</span>
                                         </div>
                                     <div>
-                                        {/* EXERCISE: display check / times icon based on workshop.modes.online */}
-                                        <FontAwesomeIcon icon={faTimes} />
+                                        <FontAwesomeIcon icon={workshop.modes.online ? faCheck : faTimes} />
                                         <span className="ms-2">Online</span>
                                     </div>
                                 </Col>
