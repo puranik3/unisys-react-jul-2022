@@ -2,6 +2,7 @@
 // "hooks" can be used ONLY in function components (class components do not need them and are not allowed to use them)
 import React, { useState, useEffect } from "react";
 import { Spinner, Alert, Button, Row, Col, Card } from "react-bootstrap";
+import Moment from 'react-moment';
 import { getWorkshops, getWorkshopsForPage } from "../../../services/workshops";
 
 import './index.css';
@@ -17,6 +18,8 @@ const WorkshopsList = ({ details }) => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [page, setPage] = useState(1);
+
+    const format = "DD-MM-yyyy";
 
     // console.log( 'workshops = ', workshops ); // data -> []
     // console.log( 'setWorkshops = ', setWorkshops ); // setter -> function
@@ -98,9 +101,18 @@ const WorkshopsList = ({ details }) => {
                                     <Card.Body>
                                         <Card.Title>{workshop.name}</Card.Title>
                                         <Card.Text>
-                                            {workshop.startDate}
-                                            -
-                                            {workshop.endDate}
+                                            <div>
+                                                <Moment format={format}>
+                                                    {workshop.startDate}
+                                                </Moment>
+                                                {" - "}
+                                                <Moment format={format}>
+                                                    {workshop.endDate}
+                                                </Moment>
+                                            </div>
+                                            <div>
+                                                {workshop.time}
+                                            </div>
                                         </Card.Text>
                                     </Card.Body>
                                 </Card>
