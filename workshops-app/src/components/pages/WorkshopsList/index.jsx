@@ -100,20 +100,24 @@ const WorkshopsList = ({ details }) => {
                                     />
                                     <Card.Body>
                                         <Card.Title>{workshop.name}</Card.Title>
-                                        <Card.Text>
-                                            <div>
-                                                <Moment format={format}>
-                                                    {workshop.startDate}
-                                                </Moment>
-                                                {" - "}
-                                                <Moment format={format}>
-                                                    {workshop.endDate}
-                                                </Moment>
-                                            </div>
-                                            <div>
-                                                {workshop.time}
-                                            </div>
-                                        </Card.Text>
+                                        {
+                                            details && (
+                                                <Card.Text>
+                                                    <div>
+                                                        <Moment format={format}>
+                                                            {workshop.startDate}
+                                                        </Moment>
+                                                        {" - "}
+                                                        <Moment format={format}>
+                                                            {workshop.endDate}
+                                                        </Moment>
+                                                    </div>
+                                                    <div>
+                                                        {workshop.time}
+                                                    </div>
+                                                </Card.Text>
+                                            )
+                                        }
                                     </Card.Body>
                                 </Card>
                             </Col>
