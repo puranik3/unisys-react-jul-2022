@@ -27,33 +27,35 @@ const WorkshopDetails = () => {
         fetchWorkshop();
     }, []); // runs ONLY after initial render
 
+    let el = null;
+
+    if( loading ) {
+        el = <div>Need to fetch details for workshops with id = {id}</div>;
+    } else {
+        if( error ) {
+            el = <Alert variant="danger">{error.message}</Alert>;
+        } else {
+            el = (
+                <div>
+                    <h1>{workshop.name}</h1>
+                    <hr />
+                    <Row>
+                        <Col xs={12} lg={4}>
+                            <Image src={workshop.imageUrl} fluid />
+                        </Col>
+                        <Col xs={12} lg={8} dangerouslySetInnerHTML={{ __html: workshop.description }}></Col>
+                    </Row>
+                </div>
+            )
+        }
+    }
+
+    
+
 
     return (
         <div>
-            {
-                loading && (
-                    <div>Need to fetch details for workshops with id = {id}</div>
-                )
-            }
-            {
-                !loading && error && (
-                    <Alert variant="danger">{error.message}</Alert>
-                )
-            }
-            {
-                !loading && !error && workshop && (
-                    <div>
-                        <h1>{workshop.name}</h1>
-                        <hr />
-                        <Row>
-                            <Col xs={12} lg={4}>
-                                <Image src={workshop.imageUrl} fluid />
-                            </Col>
-                            <Col xs={12} lg={8} dangerouslySetInnerHTML={{ __html: workshop.description }}></Col>
-                        </Row>
-                    </div>
-                )
-            }
+            {el}
         </div>
     );
 }

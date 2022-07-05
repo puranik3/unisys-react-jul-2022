@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+    </head>
+    <body>
+        <div id="root"></div>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.development.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.development.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.min.js"></script>
+
+        <script type="text/babel">
+            const root = ReactDOM.createRoot( document.getElementById( 'root' ) );
+
+            const fruits = [
+                { name: 'Apple', id: 1 },
+                { name: 'Oranges', id: 2 },
+                { name: 'Bananas', id: 3 },
+                { name: 'Strawberries', id: 4 }
+            ];
+
+            // return (
+            //     <div>
+            //         <span>Hello</span>
+            //         React
+            //     </div>
+            // );
+            
+            // console.log( el );
+
+            const show = true;
+            const name = 'React';
+            const price = 1000;
+            const john = {
+                name: 'John',
+                age: 32
+            };
+
+            const convert = ( temp ) => temp * 1.8 + 32;
+
+            const WeatherReport = ( { name, temp, convert } ) => {
+                return (
+                    <div>
+                        Name: {name}
+                        Temperature = {convert( temp )}
+                    </div>
+                );
+            };
+
+            /**
+             * Within braces you can have
+             * 1. String
+             * 2. Number
+             * 3. React element
+             * 4. Array of any of the above
+             * 5. true / false (any equivalent of false - undefined, null) - show nothing
+             */
+
+            root.render(
+                <div>
+                    {<span>Hello</span>}
+                    {name}
+                    {price}
+                    {[ 1, 2, 'hello', 'world', <span>A span</span> ]}
+                    {true}
+                    {false}
+                    {undefined}
+                    {null}
+                    {/*john*/}
+                    <WeatherReport name={"Bangalore"}  temp={30} convert={convert} />
+                </div>
+            );
+        </script>
+    </body>
+</html>

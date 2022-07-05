@@ -83,6 +83,10 @@ const WorkshopsList = ({ details, cols }) => {
     // <></> -> is React.Fragment
     return (
         <>
+            {"hello"}
+            {1}
+            {<div>Hello</div>}
+            {[<div>Hello</div>, 1, "hello"]}
             {loading && (
                 <div className="d-flex justify-content-center">
                     <Spinner animation="border" role="status">
