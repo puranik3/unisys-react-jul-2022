@@ -14,7 +14,7 @@ const Menu = () => {
                 {/* If the active class name is different from "active" then use activeClassName prop to set it */}
                 <Navbar.Brand to="/" as={NavLink} exact activeClassName={activeClassName}>Home</Navbar.Brand>
                 <Nav className="me-auto">
-                    <Nav.Link to="/workshops" as={NavLink}>List of workshops</Nav.Link>
+                    <Nav.Link to={{ pathname: "/workshops", search: '?start=2' }} as={NavLink}>List of workshops</Nav.Link>
                     <Nav.Link to="/feedback" as={NavLink}>Feedback</Nav.Link>
                 </Nav>
             </Container>

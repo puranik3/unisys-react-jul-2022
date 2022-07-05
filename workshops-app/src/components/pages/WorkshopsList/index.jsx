@@ -1,23 +1,20 @@
 // useState is one of the "hooks" of React
 // "hooks" can be used ONLY in function components (class components do not need them and are not allowed to use them)
-import React, { useState, useEffect } from 'react';
-import { Spinner, Alert, Button } from 'react-bootstrap';
-import {
-    getWorkshops,
-    getWorkshopsForPage
-} from '../../../services/workshops';
+import React, { useState, useEffect } from "react";
+import { Spinner, Alert, Button, Row, Col, Card } from "react-bootstrap";
+import { getWorkshops, getWorkshopsForPage } from "../../../services/workshops";
 
 // Shortcut to create function component code - sfc
 // { details } -> pick props.details (1st argument is props) and set it to a variable called details
-const WorkshopsList = ( { details } ) => {
-    console.log( details );
-    
+const WorkshopsList = ({ details }) => {
+    console.log(details);
+
     // [ data, setter function for the data ]
     // workshops -> data (1st item in the array)
-    const [ workshops, setWorkshops ] = useState( [] );
-    const [ loading, setLoading ] = useState( true );
-    const [ error, setError ] = useState( null );
-    const [ page, setPage ] = useState( 1 );
+    const [workshops, setWorkshops] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+    const [page, setPage] = useState(1);
 
     // console.log( 'workshops = ', workshops ); // data -> []
     // console.log( 'setWorkshops = ', setWorkshops ); // setter -> function
@@ -40,73 +37,78 @@ const WorkshopsList = ( { details } ) => {
     // );
 
     const previousPage = () => {
-        setPage( page - 1 );
+        setPage(page - 1);
     };
-    
+
     const nextPage = () => {
-        setPage( page + 1 );
+        setPage(page + 1);
     };
 
     // this side-effect runs on first load AND change to page state
     useEffect(() => {
         const fetchWorkshopsForPage = async () => {
             try {
-                const workshops = await getWorkshopsForPage( page );
-                setWorkshops( workshops );
-            } catch( error ) {
-                setError( error );
+                const workshops = await getWorkshopsForPage(page);
+                setWorkshops(workshops);
+            } catch (error) {
+                setError(error);
             } finally {
-                setLoading( false );
+                setLoading(false);
             }
         };
 
-        setLoading( true );
+        setLoading(true);
         fetchWorkshopsForPage();
-    }, [ page ]); // runs ONLY on page change 
+    }, [page]); // runs ONLY on page change
 
     // <></> -> is React.Fragment
     return (
         <>
-            {
-                loading && (
-                    <div className="d-flex justify-content-center">
-                        <Spinner animation="border" role="status">
-                            <span className="visually-hidden">
-                                Loading...
-                            </span>
-                        </Spinner>
-                    </div>
-                )
-            }
-            {
-                !loading && error && (
-                    <Alert variant="danger">
-                        {error.message}
-                    </Alert>
-                )
-            }
-            {
-                !loading && !error && (
-                    <>
-                        <h1>List of workshops</h1>
-                        <hr />
-                        <Button onClick={previousPage} size="sm me-2">Previous</Button>
-                        <Button onClick={nextPage} size="sm">Next</Button>
-                        <ol>
+            {loading && (
+                <div className="d-flex justify-content-center">
+                    <Spinner animation="border" role="status">
+                        <span className="visually-hidden">Loading...</span>
+                    </Spinner>
+                </div>
+            )}
+            {!loading && error && (
+                <Alert variant="danger">{error.message}</Alert>
+            )}
+            {!loading && !error && (
+                <>
+                    <h1>List of workshops</h1>
+                    <hr />
+                    <Button onClick={previousPage} size="sm me-2">
+                        Previous
+                    </Button>
+                    <Button onClick={nextPage} size="sm">
+                        Next
+                    </Button>
+                    <Row xs={1} lg={3}>
                         {/* Use array idx (second argument to function passed to map() as last resort */}
-                        {
-                            workshops.map(
-                                workshop => (
-                                    <li key={workshop.id}>{workshop.name}</li>
-                                )
-                            )
-                        }
-                        </ol>
-                    </>
-                )
-            }
+                        {workshops.map((workshop) => (
+                            <Col key={workshop.id}>
+                                <Card>
+                                    <Card.Img
+                                        variant="top"
+                                        src="holder.js/100px180"
+                                    />
+                                    <Card.Body>
+                                        <Card.Title>{workshop.name}</Card.Title>
+                                        <Card.Text>
+                                            {workshop.startDate}
+                                            -
+                                            {workshop.endDate}
+                                        </Card.Text>
+                                    </Card.Body>
+                                </Card>
+                            </Col>
+                        ))}
+                    </Row>
+                </>
+            )}
         </>
     );
-}
- 
+};
+
 export default WorkshopsList;
