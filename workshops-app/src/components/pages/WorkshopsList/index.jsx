@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { Spinner, Alert, Button, Row, Col, Card } from "react-bootstrap";
 import Moment from 'react-moment';
+import { Link } from 'react-router-dom';
 import { getWorkshops, getWorkshopsForPage } from "../../../services/workshops";
 
 import './index.css';
@@ -114,7 +115,11 @@ const WorkshopsList = ({ details, cols }) => {
                         {/* Use array idx (second argument to function passed to map() as last resort */}
                         {workshops.map((workshop) => (
                             <Col key={workshop.id} className="d-flex align-items-stretch my-3">
-                                <Card className="p-4 card-workshop">
+                                <Card
+                                    className="p-4 card-workshop text-reset text-decoration-none"
+                                    as={Link}
+                                    to={`/workshops/${workshop.id}`}
+                                >
                                     <Card.Img
                                         variant="top"
                                         src={workshop.imageUrl}

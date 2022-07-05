@@ -3,6 +3,7 @@ import { Switch, Route } from "react-router-dom";
 import Menu from "./components/Menu/";
 import MyHome from "./components/pages/Home";
 import WorkshopsList from "./components/pages/WorkshopsList";
+import WorkshopDetails from "./components/pages/WokshopDetails";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -14,6 +15,9 @@ function App() {
             <Menu></Menu>
             <Container className="my-4">
                 <Switch>
+                    <Route path="/workshops/:id">
+                        <WorkshopDetails />
+                    </Route>
                     <Route path="/workshops">
                         {/* props (attributes) are the way to customize an instance of the component - it is the way the parent component (here, App) customizes the children (here, WorkshopsList) */}
                         <WorkshopsList
