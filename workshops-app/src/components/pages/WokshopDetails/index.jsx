@@ -6,8 +6,9 @@ import {
     faCheck,
     faTimes
 } from '@fortawesome/free-solid-svg-icons';
-
 import Moment from 'react-moment';
+
+import SessionsList from './SessionsList';
 
 import { getWorkshopById } from '../../../services/workshops';
 
