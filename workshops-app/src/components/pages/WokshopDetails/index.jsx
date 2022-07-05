@@ -88,6 +88,8 @@ const WorkshopDetails = () => {
                             <div dangerouslySetInnerHTML={{ __html: workshop.description }}></div>
                         </Col>
                     </Row>
+
+                    <SessionsList id={id} />
                 </div>
             )
         }

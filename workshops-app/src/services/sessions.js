@@ -1,0 +1,3 @@
+/**
+ * getSessionsForWorkshop( workshopId )
+ */
