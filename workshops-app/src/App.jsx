@@ -16,7 +16,10 @@ function App() {
                 <Switch>
                     <Route path="/workshops">
                         {/* props (attributes) are the way to customize an instance of the component - it is the way the parent component (here, App) customizes the children (here, WorkshopsList) */}
-                        <WorkshopsList details={false}></WorkshopsList>
+                        <WorkshopsList
+                            details={false}
+                            cols={4}
+                        ></WorkshopsList>
                     </Route>
                     <Route path="/">
                         <MyHome></MyHome>

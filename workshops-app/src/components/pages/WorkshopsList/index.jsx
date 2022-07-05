@@ -9,8 +9,8 @@ import './index.css';
 
 // Shortcut to create function component code - sfc
 // { details } -> pick props.details (1st argument is props) and set it to a variable called details
-const WorkshopsList = ({ details }) => {
-    console.log(details);
+const WorkshopsList = ({ details, cols }) => {
+    // console.log(details, cols);
 
     // [ data, setter function for the data ]
     // workshops -> data (1st item in the array)
@@ -18,6 +18,7 @@ const WorkshopsList = ({ details }) => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [page, setPage] = useState(1);
+    const [ show, setShow ] = useState( details );
 
     const format = "DD-MM-yyyy";
 
@@ -42,11 +43,19 @@ const WorkshopsList = ({ details }) => {
     // );
 
     const previousPage = () => {
-        setPage(page - 1);
+        // setPage( p - 1 );
+
+        // if new state depends on current state, then we must use the function form os the setter
+        setPage( p => p - 1 );
     };
 
     const nextPage = () => {
-        setPage(page + 1);
+        setPage( p => p + 1 );
+    };
+
+    const toggle = () => {
+        // new state depends on current state, then we must use the function form os the setter
+        setShow( v => !v );
     };
 
     // this side-effect runs on first load AND change to page state
@@ -83,13 +92,21 @@ const WorkshopsList = ({ details }) => {
                 <>
                     <h1>List of workshops</h1>
                     <hr />
-                    <Button onClick={previousPage} size="sm me-2">
-                        Previous
-                    </Button>
-                    <Button onClick={nextPage} size="sm">
-                        Next
-                    </Button>
-                    <Row xs={1} lg={3}>
+                    <div className="d-flex justify-content-between">
+                        <div>
+                            <Button onClick={previousPage} size="sm me-2">
+                                Previous
+                            </Button>
+                            <Button onClick={nextPage} size="sm">
+                                Next
+                            </Button>
+                        </div>
+                        
+                        <Button size="sm" onClick={toggle}>
+                            Hide / Show details
+                        </Button>
+                    </div>
+                    <Row xs={1} lg={cols} className="clearfix">
                         {/* Use array idx (second argument to function passed to map() as last resort */}
                         {workshops.map((workshop) => (
                             <Col key={workshop.id} className="d-flex align-items-stretch my-3">
@@ -101,7 +118,7 @@ const WorkshopsList = ({ details }) => {
                                     <Card.Body>
                                         <Card.Title>{workshop.name}</Card.Title>
                                         {
-                                            details && (
+                                            show ? (
                                                 <Card.Text>
                                                     <div>
                                                         <Moment format={format}>
@@ -116,6 +133,8 @@ const WorkshopsList = ({ details }) => {
                                                         {workshop.time}
                                                     </div>
                                                 </Card.Text>
+                                            ) : (
+                                                <span>Some details are hidden</span>
                                             )
                                         }
                                     </Card.Body>
