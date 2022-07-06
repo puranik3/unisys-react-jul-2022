@@ -32,6 +32,23 @@ const SessionsList = ( { id } ) => {
 
         const updatedSession = await voteSvc( sessionId, type );
         console.log( updatedSession );
+
+        sessions.find( session => session.id === updatedSession.id );
+
+        // we make an "immutable" change to the sessions array - i.e. the current sessions remains untouched, and a new array of sessions is generated
+        setSessions( sessions => {
+            // generate a new sessions array through map(), and return it
+            // every item except the one updated is the same as before
+            return sessions.map(
+                s => {
+                    if( s.id === sessionId ) {
+                        return updatedSession;
+                    } else {
+                        return s;
+                    }
+                }
+            )
+        });
     };
 
     return (
