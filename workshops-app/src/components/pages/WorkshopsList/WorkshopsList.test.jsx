@@ -12,7 +12,7 @@ describe( 'loading tests', () => {
         );
 
         const loadingEl = screen.getByRole( "status", { name: /Loading list of workshops/i } );
-        // const loadingEl = screen.getByText( /Loading/i );
+        // const loadingEl = screen.g`etByText( /Loading/i );
         
         expect( loadingEl ).toBeInTheDocument();
     });
