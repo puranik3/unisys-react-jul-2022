@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Spinner, Alert, ListGroup } from 'react-bootstrap';
 import SessionItem from './SessionItem';
 
-import { getSessionsForWorkshop } from "../../../../services/sessions";
+import { getSessionsForWorkshop, vote as voteSvc } from "../../../../services/sessions";
 
 // The component recieves id as a prop. Alternatively it can use useParams() to get it from the URL.
 const SessionsList = ( { id } ) => {
@@ -26,8 +26,12 @@ const SessionsList = ( { id } ) => {
         fetchSessionsForWorkshop();
     }, []); // runs ONLY after first render
 
-    const vote = () => {
-        alert( 'You tried to vote up' );
+    const vote = async ( event, sessionId, type ) => {
+        console.log( event );
+        console.log( 'You tried to ' + type + ' session id =' + sessionId );
+
+        const updatedSession = await voteSvc( sessionId, type );
+        console.log( updatedSession );
     };
 
     return (

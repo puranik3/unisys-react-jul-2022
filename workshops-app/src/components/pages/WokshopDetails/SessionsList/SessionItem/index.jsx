@@ -12,10 +12,14 @@ const SessionItem = ( { session, vote } ) => {
                 <FontAwesomeIcon
                     icon={faCaretUp}
                     className="fa-2x"
-                    onClick={vote}
+                    onClick={( event ) => vote( event, session.id, 'upvote' )}
                 />
                 {session.upvoteCount}
-                <FontAwesomeIcon icon={faCaretDown} className="fa-2x" />
+                <FontAwesomeIcon
+                    icon={faCaretDown}
+                    className="fa-2x"
+                    onClick={() => vote( session.id, 'downvote' )}
+                />
             </Col>
             <Col xs={11}>
                 <h3>{session.name}</h3>
