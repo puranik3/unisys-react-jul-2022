@@ -26,8 +26,18 @@ const handlers = [
             ctx.json( workshops )
         );
     })
-]
+];
+
+const errorHandlers = [
+    rest.get( `${baseUrl}/workshops`, ( req, res, ctx ) => {
+        return res(
+            ctx.status( 500 ),
+            ctx.json( null )
+        );
+    })
+];
 
 export {
-    handlers
+    handlers,
+    errorHandlers
 };
