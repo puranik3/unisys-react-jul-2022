@@ -10,10 +10,11 @@ import {
 
 // The component recieves id as a prop. Alternatively it can use useParams() to get it from the URL.
 const SessionsList = ({ id }) => {
-    const [sessions, setSessions] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
-    const [filterKey, setFilterKey] = useState("Props");
+    const [ sessions, setSessions ] = useState([]);
+    const [ filteredSessions, setFilteredSessions ] = useState([]);
+    const [ loading, setLoading ] = useState(true);
+    const [ error, setError ] = useState(null);
+    const [ filterKey, setFilterKey ] = useState("Props");
 
     useEffect(() => {
         const fetchSessionsForWorkshop = async () => {
@@ -31,6 +32,13 @@ const SessionsList = ({ id }) => {
         fetchSessionsForWorkshop();
     }, []); // runs ONLY after first render
 
+    useEffect(() => {
+        const filteredSessions = sessions.filter(
+            session => session.includes( filterKey )
+        );
+        setFilteredSessions( filteredSessions );
+    }, [ filterKey, sessions ]);
+    
     const vote = async (event, sessionId, type) => {
         console.log(event);
         console.log("You tried to " + type + " session id =" + sessionId);
@@ -87,7 +95,7 @@ const SessionsList = ({ id }) => {
                     </Form.Group>
                     {filterKey}
                     <ListGroup>
-                        {sessions.map((session) => (
+                        {filteredSessions.map((session) => (
                             <ListGroup.Item key={session.id}>
                                 <SessionItem
                                     session={session}
