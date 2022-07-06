@@ -26,6 +26,10 @@ const SessionsList = ( { id } ) => {
         fetchSessionsForWorkshop();
     }, []); // runs ONLY after first render
 
+    const vote = () => {
+        alert( 'You tried to vote up' );
+    };
+
     return (
         <div>
             {loading && (
@@ -48,7 +52,10 @@ const SessionsList = ( { id } ) => {
                                 sessions.map(
                                     session => (
                                         <ListGroup.Item key={session.id}>
-                                            <SessionItem session={session}></SessionItem>
+                                            <SessionItem
+                                                session={session}
+                                                vote={vote}
+                                            ></SessionItem>
                                         </ListGroup.Item>
                                     )
                                 )

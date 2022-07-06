@@ -5,11 +5,15 @@ import {
     faCaretDown
 } from '@fortawesome/free-solid-svg-icons';
 
-const SessionItem = ( { session } ) => {
+const SessionItem = ( { session, vote } ) => {
     return (
         <Row>
             <Col xs={1} className="d-flex flex-column align-items-center">
-                <FontAwesomeIcon icon={faCaretUp} className="fa-2x" />
+                <FontAwesomeIcon
+                    icon={faCaretUp}
+                    className="fa-2x"
+                    onClick={vote}
+                />
                 {session.upvoteCount}
                 <FontAwesomeIcon icon={faCaretDown} className="fa-2x" />
             </Col>
