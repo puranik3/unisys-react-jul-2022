@@ -18,7 +18,7 @@ const SessionItem = ( { session, vote } ) => {
                 <FontAwesomeIcon
                     icon={faCaretDown}
                     className="fa-2x"
-                    onClick={() => vote( session.id, 'downvote' )}
+                    onClick={( event ) => vote( event, session.id, 'downvote' )}
                 />
             </Col>
             <Col xs={11}>
