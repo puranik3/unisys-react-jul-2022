@@ -42,7 +42,7 @@ const SessionsList = ({ id }) => {
         // debouncedSearch( filterKey )
         
         const filteredSessions = sessions.filter(
-            session => session.includes( filterKey )
+            session => session.name.includes( filterKey )
         );
         setFilteredSessions( filteredSessions );
 
