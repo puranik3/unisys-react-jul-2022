@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { ListGroup, ListGroupItem } from 'react-bootstrap';
+import { Spinner, Alert, ListGroup } from 'react-bootstrap';
 import SessionItem from './SessionItem';
 
 import { getSessionsForWorkshop } from "../../../../services/sessions";
@@ -28,19 +28,35 @@ const SessionsList = ( { id } ) => {
 
     return (
         <div>
-            <h2>Sessions in this workshop</h2>
-            <hr />
-            <ListGroup>
-                {
-                    sessions.map(
-                        session => (
-                            <ListGroup.Item key={session.id}>
-                                <SessionItem session={session}></SessionItem>
-                            </ListGroup.Item>
-                        )
-                    )
-                }
-            </ListGroup>
+            {loading && (
+                <div className="d-flex justify-content-center">
+                    <Spinner animation="border" role="status">
+                        <span className="visually-hidden">Loading...</span>
+                    </Spinner>
+                </div>
+            )}
+            {!loading && error && (
+                <Alert variant="danger">{error.message}</Alert>
+            )}
+            {
+                !loading && !error && (
+                    <>
+                        <h2>Sessions in this workshop</h2>
+                        <hr />
+                        <ListGroup>
+                            {
+                                sessions.map(
+                                    session => (
+                                        <ListGroup.Item key={session.id}>
+                                            <SessionItem session={session}></SessionItem>
+                                        </ListGroup.Item>
+                                    )
+                                )
+                            }
+                        </ListGroup>
+                    </>
+                )
+            }
         </div>
     );
 }
