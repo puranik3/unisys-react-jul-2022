@@ -8,6 +8,10 @@ import {
     vote as voteSvc,
 } from "../../../../services/sessions";
 
+// NOTE: Discussion on debouncing
+// import { getSearchresults } from '';
+// const debouncedSearch = debounce( getSearchresults );
+
 // The component recieves id as a prop. Alternatively it can use useParams() to get it from the URL.
 const SessionsList = ({ id }) => {
     const [ sessions, setSessions ] = useState([]);
@@ -33,10 +37,15 @@ const SessionsList = ({ id }) => {
     }, []); // runs ONLY after first render
 
     useEffect(() => {
+        // NOTE: Discussion on debouncing
+        // the underlying function is called only if a fixed time has passed since last change to filterKey
+        // debouncedSearch( filterKey )
+        
         const filteredSessions = sessions.filter(
             session => session.includes( filterKey )
         );
         setFilteredSessions( filteredSessions );
+
     }, [ filterKey, sessions ]);
     
     const vote = async (event, sessionId, type) => {
