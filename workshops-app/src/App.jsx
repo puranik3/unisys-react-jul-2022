@@ -5,13 +5,17 @@ import MyHome from "./components/pages/Home";
 import WorkshopsList from "./components/pages/WorkshopsList";
 import WorkshopDetails from "./components/pages/WokshopDetails";
 
+import { ToastContainer } from 'react-toastify';
+
 import "bootstrap/dist/css/bootstrap.min.css";
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
     // JSX is like HTML syntax
     // JSX defines a "React element" - an object which defines the user interface
     return (
         <div id="app" title="Workshops App">
+            <ToastContainer autoClose={5000} />
             <Menu></Menu>
             <Container className="my-4">
                 <Switch>

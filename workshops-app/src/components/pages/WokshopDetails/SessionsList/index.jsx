@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Spinner, Alert, ListGroup } from 'react-bootstrap';
 import SessionItem from './SessionItem';
+import { toast } from 'react-toastify';
 
 import { getSessionsForWorkshop, vote as voteSvc } from "../../../../services/sessions";
 
@@ -30,25 +31,31 @@ const SessionsList = ( { id } ) => {
         console.log( event );
         console.log( 'You tried to ' + type + ' session id =' + sessionId );
 
-        const updatedSession = await voteSvc( sessionId, type );
-        console.log( updatedSession );
+        try {
+            const updatedSession = await voteSvc( sessionId, type );
+            console.log( updatedSession );
 
-        sessions.find( session => session.id === updatedSession.id );
+            sessions.find( session => session.id === updatedSession.id );
 
-        // we make an "immutable" change to the sessions array - i.e. the current sessions remains untouched, and a new array of sessions is generated
-        setSessions( sessions => {
-            // generate a new sessions array through map(), and return it
-            // every item except the one updated is the same as before
-            return sessions.map(
-                s => {
-                    if( s.id === sessionId ) {
-                        return updatedSession;
-                    } else {
-                        return s;
+            // we make an "immutable" change to the sessions array - i.e. the current sessions remains untouched, and a new array of sessions is generated
+            setSessions( sessions => {
+                // generate a new sessions array through map(), and return it
+                // every item except the one updated is the same as before
+                return sessions.map(
+                    s => {
+                        if( s.id === sessionId ) {
+                            return updatedSession;
+                        } else {
+                            return s;
+                        }
                     }
-                }
-            )
-        });
+                )
+            });
+
+            toast.success( 'Your vote has been captured' );
+        } catch( error ) {
+            toast.error( error.message );
+        }
     };
 
     return (
