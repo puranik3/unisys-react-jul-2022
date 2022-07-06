@@ -20,7 +20,7 @@ function App() {
             <Container className="my-4">
                 <Switch>
                     <Route path="/workshops/:id">
-                        <WorkshopDetails />
+                        <WorkshopDetails></WorkshopDetails>
                     </Route>
                     <Route path="/workshops">
                         {/* props (attributes) are the way to customize an instance of the component - it is the way the parent component (here, App) customizes the children (here, WorkshopsList) */}

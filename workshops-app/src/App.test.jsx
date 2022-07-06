@@ -1,13 +1,17 @@
 import { screen, render } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 import App from './App';
+import AllProviders from './test-utils/AllProviders';
 
 test( 'should render', () => {
     // since Menu renders NavLink, and NavLink needs BrowserRouter somewhere above in the component hierarchy, we enclose the App compoenent in BrowserRouter
+
+    // ALternative way to pass the component as a prop, instead of he "children prop"
+    // <AllProviders Component={App}>
     render(
-        <BrowserRouter>
+        <AllProviders>
             <App />
-        </BrowserRouter>
+        </AllProviders>
     );
 
     const app = screen.getByTitle( /Workshops App/i );

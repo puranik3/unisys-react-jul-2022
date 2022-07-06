@@ -82,7 +82,7 @@ const WorkshopsList = ({ details, cols }) => {
         <>
             {loading && (
                 <div className="d-flex justify-content-center">
-                    <Spinner animation="border" role="status">
+                    <Spinner animation="border" role="status" aria-label="Loading list of workshops">
                         <span className="visually-hidden">Loading...</span>
                     </Spinner>
                 </div>
