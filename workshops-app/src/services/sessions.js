@@ -14,7 +14,17 @@ const vote = async ( sessionId, type ) => {
     return response.data;
 };
 
+const addSession = async ( session ) => {
+    const response = await axios.post( `${baseUrl}/sessions`, session, {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    });
+    return response.data;
+};
+
 export {
     getSessionsForWorkshop,
-    vote
+    vote,
+    addSession
 };

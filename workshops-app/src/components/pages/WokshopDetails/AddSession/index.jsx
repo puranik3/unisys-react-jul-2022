@@ -1,8 +1,14 @@
 // createRef in class components
+import { toast } from 'react-toastify';
 import { useRef, useState } from 'react';
 import { Form, Button } from "react-bootstrap";
+import { useHistory } from 'react-router-dom';
+
+import { addSession as addSessionSvc } from '../../../../services/sessions';
 
 const AddSession = ({ id }) => {
+    const { push } = useHistory();
+
     const sequenceIdRef = useRef();
     const nameRef = useRef();
     const speakerRef = useRef();
@@ -47,12 +53,29 @@ const AddSession = ({ id }) => {
         return valid;
     };
 
-    const addSession = ( event ) => {
+    const addSession = async ( event ) => {
         // prevent the browser from submitting the form
         event.preventDefault();
 
         if( validate() ) {
-            alert( 'About to submit' );
+            const session = {
+                workshopId: +id,
+                sequenceId: +sequenceIdRef.current.value.trim(),
+                name: nameRef.current.value.trim(),
+                speaker: speakerRef.current.value.trim(),
+                duration: parseFloat( durationRef.current.value.trim() ),
+                level: levelRef.current.value.trim(),
+                abstract: abstractRef.current.value.trim(),
+                upvoteCount: 0
+            };
+
+            try {
+                const addedSession = await addSessionSvc( session );
+                toast.success( 'Session was added' );
+                push( `/workshops/${id}` );
+            } catch( error ) {
+                toast.error( error.response.data || error.message )
+            }
         }
     }
 
