@@ -74,6 +74,7 @@ const AddSession = ({ id }) => {
                 toast.success( 'Session was added' );
                 push( `/workshops/${id}` );
             } catch( error ) {
+                console.log( error );
                 toast.error( error.response.data || error.message )
             }
         }
