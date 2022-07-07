@@ -20,25 +20,37 @@
             const root = ReactDOM.createRoot( document.getElementById( 'root' ) );
 
             // reducer (inspired from Redux)
+            // all state changes are centralized in the reducer function
+            // helps maintain data integrity
+            // never change incoming state, never change incoming action ("pure function")
             const reducer = ( state, action ) => {
                 switch( action.type ) {
                     case DECREMENT:
-                        return state - 1;
+                        return {
+                            ...state,
+                            value: state.value - action.changeBy
+                        };
                     case INCREMENT:
-                        return state + 1;
+                        // state.value++; // never change state
+                        return {
+                            ...state,
+                            value: state.value + action.changeBy
+                        };
                     default:
                         return state;
                 }
             };
 
             const Counter = () => {
-                const [ value, dispatch ] = React.useReducer( reducer, 0 );
+                const [ counter, dispatch ] = React.useReducer( reducer, { value: 0, x: 'hello' } );
+                const numRef = React.useRef();
                 
                 return (
                     <div>
-                        <button onClick={() => dispatch( { type: DECREMENT } )}>-</button>
-                        {value}
-                        <button onClick={() => dispatch( { type: INCREMENT } )}>+</button>
+                        <input type="number" defaultValue="1" ref={numRef} />
+                        <button onClick={() => dispatch( { type: DECREMENT, changeBy: +numRef.current.value } )}>-</button>
+                        {counter.value}
+                        <button onClick={() => dispatch( { type: INCREMENT, changeBy: +numRef.current.value } )}>+</button>
                     </div>
                 );
             };
