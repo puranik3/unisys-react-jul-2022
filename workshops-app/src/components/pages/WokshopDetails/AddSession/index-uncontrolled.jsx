@@ -1,6 +1,6 @@
 // createRef in class components
 import { toast } from 'react-toastify';
-import { useRef, useState, useEffect } from 'react';
+import { useRef, useState } from 'react';
 import { Form, Button } from "react-bootstrap";
 import { useHistory } from 'react-router-dom';
 
@@ -9,12 +9,12 @@ import { addSession as addSessionSvc } from '../../../../services/sessions';
 const AddSession = ({ id }) => {
     const { push } = useHistory();
 
-    const [ sequenceId, setSequenceId ] = useState( '' );
-    const [ name, setName ] = useState( '' );
-    const [ speaker, setSpeaker ] = useState( '' );
-    const [ duration, setDuration ] = useState( '' );
-    const [ level, setLevel ] = useState( '' );
-    const [ abstract, setAbstract ] = useState( '' );
+    const sequenceIdRef = useRef();
+    const nameRef = useRef();
+    const speakerRef = useRef();
+    const durationRef = useRef();
+    const levelRef = useRef();
+    const abstractRef = useRef();
 
     const [ sequenceIdErr, setSequenceIdErr ] = useState( '' );
     // const [ nameErr, setNameErr ] = useState( '' );
@@ -24,22 +24,21 @@ const AddSession = ({ id }) => {
     // const [ abstractErr, setAbstractErr ] = useState( '' );
 
     const [ valid, setValid ] = useState( false );
-    const [ isSubmitted, setSubmitted ] = useState( false );
 
     const validate = () => {
-        const sequenceIdVal = sequenceId.trim();
+        const sequenceId = sequenceIdRef.current.value.trim();
         
         let sequenceIdErr = '';
         let valid = true;
 
         // is required
-        if( sequenceIdVal === '' ) {
+        if( sequenceId === '' ) {
             sequenceIdErr += 'Sequence ID cannot be empty';
             valid = false;
         }
 
         // is a positive number
-        if( /^\d+$/.test( sequenceIdVal ) === false ) {
+        if( /^\d+$/.test( sequenceId ) === false ) {
             sequenceIdErr += 'Sequence ID must be a positive number';
             valid = false;
         }
@@ -54,25 +53,19 @@ const AddSession = ({ id }) => {
         return valid;
     };
 
-    useEffect( () => {
-        validate();
-    }, [ sequenceId ] );
-
     const addSession = async ( event ) => {
-        setSubmitted( true );
-
         // prevent the browser from submitting the form
         event.preventDefault();
 
         if( validate() ) {
             const session = {
                 workshopId: +id,
-                sequenceId: +sequenceId.trim(),
-                name: name.trim(),
-                speaker: speaker.trim(),
-                duration: parseFloat( duration.trim() ),
-                level: level.trim(),
-                abstract: abstract.trim(),
+                sequenceId: +sequenceIdRef.current.value.trim(),
+                name: nameRef.current.value.trim(),
+                speaker: speakerRef.current.value.trim(),
+                duration: parseFloat( durationRef.current.value.trim() ),
+                level: levelRef.current.value.trim(),
+                abstract: abstractRef.current.value.trim(),
                 upvoteCount: 0
             };
 
@@ -97,16 +90,15 @@ const AddSession = ({ id }) => {
                     <Form.Control
                         type="number"
                         placeholder="2"
-                        value={sequenceId}
-                        onChange={ event => setSequenceId( event.target.value ) }
-                        isInvalid={isSubmitted && sequenceIdErr}
+                        ref={sequenceIdRef}
+                        isInvalid={sequenceIdErr}
                     />
                     <Form.Text className="text-muted">
                         Sequence ID is the serial number of the session in the
                         workshop
                     </Form.Text>
                     <Form.Control.Feedback type="invalid">
-                        {isSubmitted && sequenceIdErr}
+                        {sequenceIdErr}
                     </Form.Control.Feedback>
                 </Form.Group>
 
@@ -115,29 +107,18 @@ const AddSession = ({ id }) => {
                     <Form.Control
                         type="text"
                         placeholder="React v18 features"
-                        value={name}
-                        onChange={ event => setName( event.target.value ) }
+                        ref={nameRef}
                     />
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="speaker">
                     <Form.Label>Speaker</Form.Label>
-                    <Form.Control
-                        type="text"
-                        placeholder="John Doe, Jane Doe"
-                        value={speaker}
-                        onChange={ event => setSpeaker( event.target.value ) }
-                    />
+                    <Form.Control type="text" placeholder="John Doe, Jane Doe" ref={speakerRef} />
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="duration">
                     <Form.Label>Duration</Form.Label>
-                    <Form.Control
-                        type="text"
-                        placeholder="1.5"
-                        value={duration}
-                        onChange={ event => setDuration( event.target.value ) }
-                    />
+                    <Form.Control type="text" placeholder="1.5" ref={durationRef} />
                     <Form.Text className="text-muted">
                         Duration must be specified in hours. Example: for 30
                         minutes, enter 0.5
@@ -146,10 +127,7 @@ const AddSession = ({ id }) => {
 
                 <Form.Group className="mb-3" controlId="level">
                     <Form.Label>Level</Form.Label>
-                    <Form.Select
-                        value={level}
-                        onChange={ event => setLevel( event.target.value ) }
-                    >
+                    <Form.Select ref={levelRef}>
                         <option value="">-- Select level --</option>
                         <option value="Basic">Basic</option>
                         <option value="Intermediate">Intermediate</option>
@@ -159,12 +137,7 @@ const AddSession = ({ id }) => {
 
                 <Form.Group className="mb-3" controlId="abstract">
                     <Form.Label>Description</Form.Label>
-                    <Form.Control
-                        as="textarea"
-                        placeholder="Describe the session in a few words"
-                        value={abstract}
-                        onChange={ event => setAbstract( event.target.value ) }
-                    />
+                    <Form.Control as="textarea" placeholder="Describe the session in a few words" ref={abstractRef} />
                     <Form.Text className="text-muted">
                         Description must be at least 20 characters long
                     </Form.Text>
