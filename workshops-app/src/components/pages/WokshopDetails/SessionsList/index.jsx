@@ -10,7 +10,7 @@ import {
 
 const useFilter = ( sessions ) => {
     const [ filteredSessions, setFilteredSessions ] = useState(sessions);
-    const [ filterKey, setFilterKey ] = useState("Props");
+    const [ filterKey, setFilterKey ] = useState('');
     
     useEffect(() => {
         // NOTE: Discussion on debouncing
