@@ -1,6 +1,6 @@
-const AddSession = () => {
+const AddSession = ( {id } ) => {
     return (
-        <div>AddSession works!</div>
+        <div>AddSession works (id = {id})!</div>
     )
 };
 

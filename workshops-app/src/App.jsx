@@ -1,5 +1,5 @@
 import { Container } from "react-bootstrap";
-import { Switch, Route } from "react-router-dom";
+import { Switch, Route, Redirect } from "react-router-dom";
 import Menu from "./components/Menu/";
 import MyHome from "./components/pages/Home";
 import WorkshopsList from "./components/pages/WorkshopsList";
@@ -30,12 +30,15 @@ function App() {
                             cols={4}
                         ></WorkshopsList>
                     </Route>
-                    <Route path="/">
+                    <Route path="/notfound">
+                        <PageNotFound></PageNotFound>
+                    </Route>
+                    <Route path="/" exact>
                         <MyHome></MyHome>
                     </Route>
                     {/* ** matches all routes, but we have put this as the last route. so if none matched, this will match and show the page not found */}
                     <Route path="**">
-                        <PageNotFound></PageNotFound>
+                        <Redirect to="/notfound" />
                     </Route>
                 </Switch>
             </Container>

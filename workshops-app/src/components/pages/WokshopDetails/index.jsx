@@ -46,7 +46,7 @@ const WorkshopDetails = () => {
         el = <div>Need to fetch details for workshops with id = {id}</div>;
     } else {
         if( error ) {
-            el = <Redirect to="/" />
+            el = <Redirect to="/notfound" />
         } else {
             el = (
                 <div>
