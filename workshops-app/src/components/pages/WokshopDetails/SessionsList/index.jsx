@@ -3,33 +3,12 @@ import { Form, Spinner, Alert, ListGroup } from "react-bootstrap";
 import SessionItem from "./SessionItem";
 import { toast } from "react-toastify";
 
+import useFilter from '../../../../hooks/useFilter';
+
 import {
     getSessionsForWorkshop,
     vote as voteSvc,
 } from "../../../../services/sessions";
-
-const useFilter = ( sessions ) => {
-    const [ filteredSessions, setFilteredSessions ] = useState(sessions);
-    const [ filterKey, setFilterKey ] = useState('');
-    
-    useEffect(() => {
-        // NOTE: Discussion on debouncing
-        // the underlying function is called only if a fixed time has passed since last change to filterKey
-        // debouncedSearch( filterKey )
-        
-        const filteredSessions = sessions.filter(
-            session => session.name.includes( filterKey )
-        );
-        setFilteredSessions( filteredSessions );
-
-    }, [ filterKey, sessions ]);
-
-    return {
-        filteredSessions,
-        filterKey,
-        setFilterKey
-    }
-};
 
 // NOTE: Discussion on debouncing
 // import { getSearchresults } from '';
@@ -57,7 +36,7 @@ const SessionsList = ({ id }) => {
         fetchSessionsForWorkshop();
     }, []); // runs ONLY after first render
 
-    const { filterKey, setFilterKey, filteredSessions } = useFilter( sessions );
+    const { filterKey, setFilterKey, filteredItems : filteredSessions } = useFilter( sessions );
     
     const vote = async (event, sessionId, type) => {
         console.log(event);

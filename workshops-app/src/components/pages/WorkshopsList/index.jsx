@@ -1,8 +1,10 @@
 // useState is one of the "hooks" of React
 // "hooks" can be used ONLY in function components (class components do not need them and are not allowed to use them)
 import React, { useState, useEffect } from "react";
-import { Spinner, Alert, Button, Row, Col } from "react-bootstrap";
+import { Form, Spinner, Alert, Button, Row, Col } from "react-bootstrap";
 import { getWorkshops, getWorkshopsForPage } from "../../../services/workshops";
+
+import useFilter from '../../../hooks/useFilter';
 
 import './index.css';
 import WorkshopItem from "./WorkshopItem";
@@ -56,6 +58,8 @@ const WorkshopsList = ({ details, cols }) => {
         setShow( v => !v );
     };
 
+    const { filterKey, setFilterKey, filteredItems : filteredWorkshops } = useFilter( workshops );
+
     // this side-effect runs on first load AND change to page state
     useEffect(() => {
         const fetchWorkshopsForPage = async () => {
@@ -94,6 +98,14 @@ const WorkshopsList = ({ details, cols }) => {
                 <>
                     <h1>List of workshops</h1>
                     <hr />
+                    <Form.Group className="mb-3">
+                        <Form.Control
+                            type="search"
+                            placeholder="Type here to search by session name"
+                            value={filterKey}
+                            onChange={( event ) => setFilterKey( event.target.value )}
+                        />
+                    </Form.Group>
                     <div className="d-flex justify-content-between">
                         <div>
                             <Button onClick={previousPage} size="sm me-2">
@@ -110,7 +122,7 @@ const WorkshopsList = ({ details, cols }) => {
                     </div>
                     <Row xs={1} lg={cols} className="clearfix">
                         {/* Use array idx (second argument to function passed to map() as last resort */}
-                        {workshops.map((workshop) => (
+                        {filteredWorkshops.map((workshop) => (
                             <Col key={workshop.id} className="d-flex align-items-stretch my-3">
                                 <WorkshopItem
                                     workshop={workshop}
