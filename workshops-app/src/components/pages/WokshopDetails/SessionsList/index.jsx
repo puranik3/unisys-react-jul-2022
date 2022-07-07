@@ -8,34 +8,10 @@ import {
     vote as voteSvc,
 } from "../../../../services/sessions";
 
-// NOTE: Discussion on debouncing
-// import { getSearchresults } from '';
-// const debouncedSearch = debounce( getSearchresults );
-
-// The component recieves id as a prop. Alternatively it can use useParams() to get it from the URL.
-const SessionsList = ({ id }) => {
-    const [ sessions, setSessions ] = useState([]);
-    const [ filteredSessions, setFilteredSessions ] = useState([]);
-    const [ loading, setLoading ] = useState(true);
-    const [ error, setError ] = useState(null);
+const useFilter = ( sessions ) => {
+    const [ filteredSessions, setFilteredSessions ] = useState(sessions);
     const [ filterKey, setFilterKey ] = useState("Props");
-
-    useEffect(() => {
-        const fetchSessionsForWorkshop = async () => {
-            try {
-                const sessions = await getSessionsForWorkshop(id);
-                setSessions(sessions);
-            } catch (error) {
-                setError(error);
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        setLoading(true);
-        fetchSessionsForWorkshop();
-    }, []); // runs ONLY after first render
-
+    
     useEffect(() => {
         // NOTE: Discussion on debouncing
         // the underlying function is called only if a fixed time has passed since last change to filterKey
@@ -47,6 +23,41 @@ const SessionsList = ({ id }) => {
         setFilteredSessions( filteredSessions );
 
     }, [ filterKey, sessions ]);
+
+    return {
+        filteredSessions,
+        filterKey,
+        setFilterKey
+    }
+};
+
+// NOTE: Discussion on debouncing
+// import { getSearchresults } from '';
+// const debouncedSearch = debounce( getSearchresults );
+
+// The component recieves id as a prop. Alternatively it can use useParams() to get it from the URL.
+const SessionsList = ({ id }) => {
+    const [ sessions, setSessions ] = useState([]);
+    const [ loading, setLoading ] = useState(true);
+    const [ error, setError ] = useState(null);
+    
+    useEffect(() => {
+        const fetchSessionsForWorkshop = async () => {
+            try {
+                const sessions = await getSessionsForWorkshop(id);
+                setSessions(sessions);
+            } catch (error) {
+                setError(error);
+            } finally {
+                setLoading(false);
+            }
+        };
+        
+        setLoading(true);
+        fetchSessionsForWorkshop();
+    }, []); // runs ONLY after first render
+
+    const { filterKey, setFilterKey, filteredSessions } = useFilter( sessions );
     
     const vote = async (event, sessionId, type) => {
         console.log(event);

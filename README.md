@@ -2,6 +2,8 @@
 - [Server](https://workshops-server.herokuapp.com/)
 - [Completed app](https://vw-angular.s3.ap-south-1.amazonaws.com/index.html)
 - [React bootstrap](https://react-bootstrap.github.io/)
+- [5 Reasons to use Nodejs with React for Web Development](https://www.simform.com/blog/use-nodejs-with-react/)
+- [Does React require Node.js?](https://qr.ae/pv4NSA)
 
 ## Breaks
 - Tea break (15 minutes) - 10:30 AM, 3:00 PM IST
