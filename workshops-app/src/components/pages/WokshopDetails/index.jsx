@@ -94,11 +94,11 @@ const WorkshopDetails = () => {
                     </Row>
 
                     <Switch>
-                        <Route path="/workshops/:id" exact>
-                            <SessionsList id={id} />
-                        </Route>
                         <Route path="/workshops/:id/add">
                             <AddSession id={id} />
+                        </Route>
+                        <Route path="/workshops/:id" exact>
+                            <SessionsList id={id} />
                         </Route>
                         <Route path="**">
                             <Redirect to="/notfound"></Redirect>
