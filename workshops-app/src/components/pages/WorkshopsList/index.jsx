@@ -70,13 +70,23 @@ class WorkshopsList extends Component {
         }
     }
 
+    // gets called before state / props update
+    // avoids unnecessary render which would be the case if we wrote the necessary logic in componentDidUpdate
+    static getDerivedStateFromProps(newProps, newState) {
+        // @todo
+        // WARNING: not doing any checks on prop changes (question: how to do it?)
+        return {
+            show: newProps.details
+        };
+    }
+
     // this method executes ONLY after FIRST render
     // cdm (shotcut to generate skeleton)
     componentDidMount() {
         this.fetchWorkshopsForPage();
     }
 
-    // state changes -> render is called -> componentDidUpdate is called
+    // getDerivedStateFromProps id called -> state / props changes -> render is called -> componentDidUpdate is called
     // NOT called after first render. Is called after every state / prop change
     componentDidUpdate( oldProps, oldState ) {
         // executing the side-effect on certain state change(s)
@@ -84,11 +94,15 @@ class WorkshopsList extends Component {
             this.fetchWorkshopsForPage();
         }
 
-        if( oldProps.details !== this.props.details ) {
-            this.setState({
-                show: this.props.details
-            });
-        }
+        // if( oldProps.details !== this.props.details ) {
+        //     this.setState({
+        //         show: this.props.details
+        //     });
+        // }
+    }
+
+    componentWillUnmount() {
+        console.log( 'Bye bye browser' );
     }
 
     render() {
