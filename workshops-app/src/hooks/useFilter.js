@@ -1,5 +1,9 @@
 import { useState, useEffect } from 'react';
 
+// NOTE: Discussion on debouncing
+// import { getSearchresults } from '';
+// const debouncedSearch = debounce( getSearchresults );
+
 const useFilter = ( items ) => {
     const [ filteredItems, setFilteredItems ] = useState( items );
     const [ filterKey, setFilterKey ] = useState('');
