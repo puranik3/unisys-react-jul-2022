@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useParams, Route, Redirect } from 'react-router-dom';
+import { useParams, Switch, Route, Redirect } from 'react-router-dom';
 import { Alert, Row, Col, Image } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -93,12 +93,17 @@ const WorkshopDetails = () => {
                         </Col>
                     </Row>
 
-                    <Route path="/workshops/:id" exact>
-                        <SessionsList id={id} />
-                    </Route>
-                    <Route path="/workshops/:id/add">
-                        <AddSession id={id} />
-                    </Route>
+                    <Switch>
+                        <Route path="/workshops/:id" exact>
+                            <SessionsList id={id} />
+                        </Route>
+                        <Route path="/workshops/:id/add">
+                            <AddSession id={id} />
+                        </Route>
+                        <Route path="**">
+                            <Redirect to="/notfound"></Redirect>
+                        </Route>
+                    </Switch>
                 </div>
             )
         }
