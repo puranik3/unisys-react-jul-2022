@@ -4,6 +4,7 @@ import Menu from "./components/Menu/";
 import MyHome from "./components/pages/Home";
 import WorkshopsList from "./components/pages/WorkshopsList";
 import WorkshopDetails from "./components/pages/WokshopDetails";
+import PageNotFound from "./components/PageNotFound";
 
 import { ToastContainer } from 'react-toastify';
 
@@ -31,6 +32,10 @@ function App() {
                     </Route>
                     <Route path="/">
                         <MyHome></MyHome>
+                    </Route>
+                    {/* ** matches all routes, but we have put this as the last route. so if none matched, this will match and show the page not found */}
+                    <Route path="**">
+                        <PageNotFound></PageNotFound>
                     </Route>
                 </Switch>
             </Container>

@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
-import { Form, Spinner, Alert, ListGroup } from "react-bootstrap";
+import { Button, Form, Spinner, Alert, ListGroup } from "react-bootstrap";
+import { Link } from 'react-router-dom';
 import SessionItem from "./SessionItem";
 import { toast } from "react-toastify";
 
@@ -78,7 +79,10 @@ const SessionsList = ({ id }) => {
             )}
             {!loading && !error && (
                 <>
-                    <h2>Sessions in this workshop</h2>
+                    <h2>
+                        Sessions in this workshop
+                        <Button className="float-end" as={Link} to={`/workshops/${id}/add`}>Add a session</Button>
+                    </h2>
                     <hr />
                     {/* value prop when set, enables React to "control" the component's value */}
                     <Form.Group className="mb-3">

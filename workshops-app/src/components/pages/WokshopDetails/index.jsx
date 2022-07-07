@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Route, Redirect } from 'react-router-dom';
 import { Alert, Row, Col, Image } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -9,8 +9,10 @@ import {
 import Moment from 'react-moment';
 
 import SessionsList from './SessionsList';
+import AddSession from './AddSession';
 
 import { getWorkshopById } from '../../../services/workshops';
+import { toast } from 'react-toastify';
 
 const WorkshopDetails = () => {
     const format = "DD-MM-yyyy";
@@ -28,6 +30,7 @@ const WorkshopDetails = () => {
                 setWorkshop(workshop);
             } catch (error) {
                 setError(error);
+                toast.error( 'No matching workshop was found' );
             } finally {
                 setLoading(false);
             }
@@ -43,7 +46,7 @@ const WorkshopDetails = () => {
         el = <div>Need to fetch details for workshops with id = {id}</div>;
     } else {
         if( error ) {
-            el = <Alert variant="danger">{error.message}</Alert>;
+            el = <Redirect to="/" />
         } else {
             el = (
                 <div>
@@ -90,14 +93,16 @@ const WorkshopDetails = () => {
                         </Col>
                     </Row>
 
-                    <SessionsList id={id} />
+                    <Route path="/workshops/:id" exact>
+                        <SessionsList id={id} />
+                    </Route>
+                    <Route path="/workshops/:id/add">
+                        <AddSession id={id} />
+                    </Route>
                 </div>
             )
         }
     }
-
-    
-
 
     return (
         <div>
