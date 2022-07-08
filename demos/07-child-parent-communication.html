@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+        <style>
+            .panel {
+                border: 1px solid #555;
+                border-radius: 5px;
+            }
+
+            .panel-question,
+            .panel-answer {
+                padding: 1em;
+            }
+
+            .panel-question {
+                background-color: #555;
+                color: ivory;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="root"></div>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.development.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.development.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.min.js"></script>
+
+        <script type="text/babel">
+            const root = ReactDOM.createRoot( document.getElementById( 'root' ) );
+
+            const PanelQuestion = ( { toggle } ) => {
+                return (
+                    <div className="panel-question" onClick={toggle}>Question: How does child communicate with parent in React?</div>
+                )
+            }
+
+            const PanelAnswer = ( { show } ) => {
+                return (
+                    show ? (
+                        <div className="panel-answer">Answer: Using a callback prop passed by the parent</div>
+                    ) : null
+                )
+            }
+
+            const Panel = () => {
+                const [ show, setShow ] = React.useState( true );
+                // const [ x, setX ] = React.useState( 'hello' );
+
+                const toggle = () => setShow( s => !s );
+
+                return (
+                    <div className="panel">
+                        <PanelQuestion toggle={toggle} />
+                        <PanelAnswer show={show} />
+                    </div>
+                )
+            }
+
+            root.render(
+                <Panel />
+            )
+        </script>
+    </body>
+</html>
