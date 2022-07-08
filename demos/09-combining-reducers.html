@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+    </head>
+    <body>
+        <div>
+            <input type="number" value="1" id="changeBy" />
+            <button onclick="store.dispatch( decrementAC( +changeByEl.value ) )">-</button>
+            <span id="counter"></span>
+            <button onclick="store.dispatch( incrementAC( +changeByEl.value ) )">+</button>
+        </div>
+
+        <div>
+            <div>
+                Name:
+                <input type="text" name="name" id="name" oninput="store.dispatch( setNameAC( event.target.value ) )" />
+                <span id="updated-name"></span>
+            </div>
+            <div>
+                Role:
+                <input type="text" name="role" id="role" oninput="store.dispatch( setRoleAC( event.target.value ) )" />
+                <span id="updated-role"></span>
+            </div>
+        </div>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/redux/4.2.0/redux.js"></script>
+
+        <script>
+            const changeByEl = document.getElementById( 'changeBy' );
+
+            const DECREMENT = 'DECREMENT';
+            const INCREMENT = 'INCREMENT';
+
+            const SET_NAME = 'SET_NAME';
+            const SET_ROLE = 'SET_ROLE';
+
+            const decrementAC = ( changeBy ) => {
+                return {
+                    type: DECREMENT,
+                    payload: {
+                        changeBy: changeBy 
+                    }
+                };
+            };
+            
+            const incrementAC = ( changeBy ) => {
+                return {
+                    type: INCREMENT,
+                    payload: {
+                        changeBy: changeBy 
+                    }
+                };
+            };
+
+            const setNameAC = ( name ) => {
+                return {
+                    type: SET_NAME,
+                    payload: {
+                        name
+                    }
+                };
+            };
+            
+            const setRoleAC = ( role ) => {
+                return {
+                    type: SET_ROLE,
+                    payload: {
+                        role
+                    }
+                };
+            };
+
+            const initialStateCounter = {
+                value: 0
+            };
+
+            // reducer MUST be a "pure function"
+            // MUST NOT change state, action
+            // MUST NOT use global variables, functions
+            // IS PREDICTABLE: MUST return the same output for a given combination of inputs
+            const counterReducer = ( state = initialStateCounter, action ) => {
+                switch( action.type ) {
+                    case DECREMENT:
+                        return {
+                            ...state,
+                            value: state.value - action.payload.changeBy
+                        };
+                    case INCREMENT:
+                        return {
+                            ...state,
+                            value: state.value + action.payload.changeBy
+                        };
+                    default:
+                        return state;
+                }
+            };
+
+            const initialStateProfile = {
+                name: '',
+                role: ''
+            };
+
+            // reducer MUST be a "pure function"
+            // MUST NOT change state, action
+            // MUST NOT use global variables, functions
+            // IS PREDICTABLE: MUST return the same output for a given combination of inputs
+            const profileReducer = ( state = initialStateProfile, action ) => {
+                switch( action.type ) {
+                    case SET_NAME:
+                        return {
+                            ...state,
+                            name: action.payload.name
+                        };
+                    case SET_ROLE:
+                        return {
+                            ...state,
+                            role: action.payload.role
+                        };
+                    default:
+                        return state;
+                }
+            };
+
+            /**
+             * "big state" -> {
+             *      counter: {
+             *          value 0
+             *      },
+             *      profile: {
+             *          name: '',
+             *          role: ''
+             *      }
+             * }
+             */
+            const rootReducer = Redux.combineReducers({
+                counter: counterReducer,
+                profile: profileReducer
+            })
+
+            /**
+             * Suppose we dispatch( { type: 'INCREMENT', payload: { ... } } )
+             * The root reducer calls EACH reducer with their "slice" of the state
+             * 
+             * new big state -> {
+             *      counter: {
+             *          value 1
+             *      },
+             *      profile: {
+             *          name: '',
+             *          role: ''
+             *      }
+             * }
+             */
+
+
+            // when the store is created it will dispatch( { type: '@@INIT' } )
+            // reducer( undefined, { type: '@@INIT' } ) -> returns { value : 0 }
+            // state -> { value: 0 }
+            const store = Redux.createStore( rootReducer/*, initialState */ );
+
+            const render = () => {
+                const state = store.getState();
+
+                document.getElementById( 'counter' ).textContent = state.counter.value;
+                document.getElementById( 'updated-name' ).textContent = state.profile.name;
+                document.getElementById( 'updated-role' ).textContent = state.profile.role;
+            }
+
+            // display initial value
+            render();
+            
+            // Hey store! Whenever state changes, call this function
+            store.subscribe( render );
+        </script>
+    </body>
+</html>
