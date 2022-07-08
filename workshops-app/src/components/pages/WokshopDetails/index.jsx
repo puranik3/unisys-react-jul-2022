@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { useParams, Switch, Route, Redirect } from 'react-router-dom';
 import { Alert, Row, Col, Image } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -8,6 +8,8 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import Moment from 'react-moment';
 
+import ThemeContext from '../../../context/ThemeContext';
+
 import SessionsList from './SessionsList';
 import AddSession from './AddSession';
 
@@ -16,6 +18,7 @@ import { toast } from 'react-toastify';
 
 const WorkshopDetails = () => {
     const format = "DD-MM-yyyy";
+    const { theme } = useContext( ThemeContext );
 
     const { id } = useParams(); // { id: '2', action: 'edit' }
 
@@ -52,7 +55,7 @@ const WorkshopDetails = () => {
                 <div>
                     <h1>{workshop.name}</h1>
                     <hr />
-                    <Row>
+                    <Row className={theme === 'light' ? 'bg-light' : 'bg-dark text-light'}>
                         <Col xs={12} lg={4}>
                             <Image src={workshop.imageUrl} fluid />
                         </Col>

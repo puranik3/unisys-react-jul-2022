@@ -7,7 +7,7 @@ import { useHistory } from 'react-router-dom';
 import { addSession as addSessionSvc } from '../../../../services/sessions';
 import { useForm } from 'react-hook-form';
 
-const AddSession = ({ id }) => {
+const AddSession = ({ id, theme }) => {
     /**
      *  errors = {
      *      sequenceId: {
@@ -15,8 +15,11 @@ const AddSession = ({ id }) => {
      *      }
      *  }
      */
-    const { register, getValues, handleSubmit, formState: { errors } } = useForm({
-        mode: 'all'
+    const { register, getValues, handleSubmit, reset, formState: { errors } } = useForm({
+        mode: 'all',
+        // defaultValues: {
+            /* default values for the field go in here */
+        // }
     });
 
     const { push } = useHistory();
@@ -33,7 +36,8 @@ const AddSession = ({ id }) => {
         try {
             const addedSession = await addSessionSvc( session );
             toast.success( 'Session was added' );
-            push( `/workshops/${id}` );
+            reset(/* you can pass an object with values for the fields as well */);
+            // push( `/workshops/${id}` );
         } catch( error ) {
             console.log( error );
             toast.error( error.response.data || error.message )

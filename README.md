@@ -9,6 +9,9 @@
 - Tea break (15 minutes) - 10:30 AM, 3:00 PM IST
 - Lunch break (45 minutes) - 1:00 PM
 
+## Complex form validations using React Hook Form
+https://www.youtube.com/watch?v=U-iz8b4RExA
+
 ## Videos on Webpack
 - [Introduction to Webpack](https://corporate-trainings.s3.amazonaws.com/invatron/kh-invatron-react-jul-6-2020/webpack-getting-started.mp4)
 
