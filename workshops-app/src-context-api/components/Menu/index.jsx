@@ -1,14 +1,10 @@
 import { Navbar, Container, Nav, ToggleButton, ToggleButtonGroup } from "react-bootstrap";
-import { useDispatch, useSelector } from 'react-redux';
 import { NavLink } from "react-router-dom";
 import { useContext } from 'react';
 import ThemeContext from "../../context/ThemeContext";
 
-import { toggleTheme } from '../../actions/creators'
-
 const Menu = () => {
-    const dispatch = useDispatch();
-    const theme = useSelector( state => state.themeState.theme );
+    const { theme, toggleTheme } = useContext( ThemeContext );
 
     const activeClassName = "active";
 
@@ -45,7 +41,7 @@ const Menu = () => {
                         defaultValue={"light"}
                         className="mb-2"
                         name="tbg-theme"
-                        onChange={() => dispatch( toggleTheme() )}
+                        onChange={value => toggleTheme( value )}
                     >
                         <ToggleButton id="tbg-light" value="light">
                             Light

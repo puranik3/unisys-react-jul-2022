@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { Provider } from 'react-redux';
 import { Container } from "react-bootstrap";
 import { Switch, Route, Redirect } from "react-router-dom";
 import Menu from "./components/Menu/";
@@ -8,8 +7,9 @@ import WorkshopsList from "./components/pages/WorkshopsList";
 import WorkshopDetails from "./components/pages/WokshopDetails";
 import PageNotFound from "./components/PageNotFound";
 
+import ThemeContext from './context/ThemeContext';
+
 import { ToastContainer } from 'react-toastify';
-import store from './store';
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import 'react-toastify/dist/ReactToastify.css';
@@ -27,7 +27,7 @@ function App() {
     };
 
     return (
-        <Provider store={store}>
+        <ThemeContext.Provider value={value}>
             <div id="app" title="Workshops App">
                 <ToastContainer autoClose={5000} />
                 <Menu></Menu>
@@ -56,7 +56,7 @@ function App() {
                     </Switch>
                 </Container>
             </div>
-        </Provider>
+        </ThemeContext.Provider>
     );
 }
 

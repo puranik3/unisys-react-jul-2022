@@ -1,5 +1,4 @@
-import { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useState, useEffect, useContext } from "react";
 import { Button, Form, Spinner, Alert, ListGroup } from "react-bootstrap";
 import { Link } from 'react-router-dom';
 import SessionItem from "./SessionItem";
@@ -12,9 +11,11 @@ import {
     vote as voteSvc,
 } from "../../../../services/sessions";
 
+import ThemeContext from "../../../../context/ThemeContext";
+
 // The component recieves id as a prop. Alternatively it can use useParams() to get it from the URL.
 const SessionsList = ({ id }) => {
-    const theme = useSelector( state => state.themeState.theme );
+    const { theme } = useContext( ThemeContext );
 
     // EXERCISE: You can create a custom hook that fetches required data on first render of a component
     const [ sessions, setSessions ] = useState([]);

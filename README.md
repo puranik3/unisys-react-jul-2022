@@ -9,6 +9,9 @@
 - Tea break (15 minutes) - 10:30 AM, 3:00 PM IST
 - Lunch break (45 minutes) - 1:00 PM
 
+## Redux vs Context API + useReducer
+https://medium.com/javascript-scene/do-react-hooks-replace-redux-210bab340672
+
 ## Complex form validations using React Hook Form
 https://www.youtube.com/watch?v=U-iz8b4RExA
 

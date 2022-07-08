@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+    </head>
+    <body>
+        <div>
+            <input type="number" value="1" id="changeBy" />
+            <button onclick="store.dispatch( decrementAC( +changeByEl.value ) )">-</button>
+            <span id="counter"></span>
+            <button onclick="store.dispatch( incrementAC( +changeByEl.value ) )">+</button>
+        </div>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/redux/4.2.0/redux.min.js"></script>
+
+        <script>
+            const changeByEl = document.getElementById( 'changeBy' );
+
+            const DECREMENT = 'DECREMENT';
+            const INCREMENT = 'INCREMENT';
+
+            const decrementAC = ( changeBy ) => {
+                return {
+                    type: DECREMENT,
+                    payload: {
+                        changeBy: changeBy 
+                    }
+                };
+            };
+            
+            const incrementAC = ( changeBy ) => {
+                return {
+                    type: INCREMENT,
+                    payload: {
+                        changeBy: changeBy 
+                    }
+                };
+            };
+
+            const initialState = {
+                value: 0
+            };
+
+            // reducer MUST be a "pure function"
+            // MUST NOT change state, action
+            // MUST NOT use global variables, functions
+            // IS PREDICTABLE: MUST return the same output for a given combination of inputs
+            const reducer = ( state = initialState, action ) => {
+                switch( action.type ) {
+                    case DECREMENT:
+                        return {
+                            ...state,
+                            value: state.value - action.payload.changeBy
+                        };
+                    case INCREMENT:
+                        return {
+                            ...state,
+                            value: state.value + action.payload.changeBy
+                        };
+                    default:
+                        return state;
+                }
+            };
+
+            // "currying" pattern (check composability of functions)
+            const logger = store => next => action => {
+                console.log( action );
+                console.log( 'before : ', store.getState() );
+
+                next( action ); // passes on control to the next middleware / store
+
+                // this is executed after the store has updated the state
+                console.log( action );
+                console.log( 'after : ', store.getState() );
+            };
+
+            // when the store is created it will dispatch( { type: '@@INIT' } )
+            // reducer( undefined, { type: '@@INIT' } ) -> returns { value : 0 }
+            // state -> { value: 0 }
+            const store = Redux.createStore( reducer/*, initialState */, Redux.applyMiddleware( logger ) );
+
+            const render = () => {
+                document.getElementById( 'counter' ).textContent = store.getState().value;
+            }
+
+            // display initial value
+            render();
+            
+            // Hey store! Whenever state changes, call this function
+            store.subscribe( render );
+        </script>
+    </body>
+</html>

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { useParams, Switch, Route, Redirect } from 'react-router-dom';
 import { Alert, Row, Col, Image } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -8,16 +8,17 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import Moment from 'react-moment';
 
+import ThemeContext from '../../../context/ThemeContext';
+
 import SessionsList from './SessionsList';
 import AddSession from './AddSession';
 
 import { getWorkshopById } from '../../../services/workshops';
 import { toast } from 'react-toastify';
-import { useSelector } from 'react-redux';
 
 const WorkshopDetails = () => {
     const format = "DD-MM-yyyy";
-    const theme = useSelector( state => state.themeState.theme );
+    const { theme } = useContext( ThemeContext );
 
     const { id } = useParams(); // { id: '2', action: 'edit' }
 
