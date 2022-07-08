@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+    </head>
+    <body>
+        <div>
+            <button onclick="store.dispatch( { type: DECREMENT } )">-</button>
+            <span id="counter"></span>
+            <button onclick="store.dispatch( { type: INCREMENT } )">+</button>
+        </div>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/redux/4.2.0/redux.min.js"></script>
+
+        <script>
+            const DECREMENT = 'DECREMENT';
+            const INCREMENT = 'INCREMENT';
+
+            const initialState = {
+                value: 0
+            }
+
+            // reducer MUST be a "pure function"
+            // MUST NOT change state, action
+            // MUST NOT use global variables, functions
+            // IS PREDICTABLE: MUST return the same output for a given combination of inputs
+            const reducer = ( state, action ) => {
+                switch( action.type ) {
+                    case DECREMENT:
+                        return {
+                            ...state,
+                            value: state.value - 1
+                        };
+                    case INCREMENT:
+                        return {
+                            ...state,
+                            value: state.value + 1
+                        };
+                    default:
+                        return state;
+                }
+            };
+
+            const store = Redux.createStore( reducer, initialState );
+
+            const render = () => {
+                document.getElementById( 'counter' ).textContent = store.getState().value;
+            }
+
+            // display initial value
+            render();
+            
+            // Hey store! Whenever state changes, call this function
+            store.subscribe( render );
+        </script>
+    </body>
+</html>
