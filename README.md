@@ -5,11 +5,6 @@
 - [5 Reasons to use Nodejs with React for Web Development](https://www.simform.com/blog/use-nodejs-with-react/)
 - [Does React require Node.js?](https://qr.ae/pv4NSA)
 
-## Breaks
-- Tea break (15 minutes) - 10:30 AM, 3:00 PM IST
-- Lunch break (45 minutes) - 1:00 PM
-
-
 ## Redux vs Context API + useReducer
 https://medium.com/javascript-scene/do-react-hooks-replace-redux-210bab340672
 
@@ -17,11 +12,10 @@ https://medium.com/javascript-scene/do-react-hooks-replace-redux-210bab340672
 https://www.youtube.com/watch?v=U-iz8b4RExA
 
 ## Videos
-- Authentication
+- [Protected routes and authentication with React Router v5](https://www.youtube.com/watch?v=kByiWTWdpww&t=435s)
 - Redux with class API
-
-## Demos
-- i18n
+- [React Internationalisation (i18n) with React-Intl example.](https://www.youtube.com/watch?v=XcvZPWz510k)
+- [Localise React Applications Using I18Next](https://www.youtube.com/watch?v=txHU6lrsa3o)
 
 ## Videos on Webpack
 - [Introduction to Webpack](https://corporate-trainings.s3.amazonaws.com/invatron/kh-invatron-react-jul-6-2020/webpack-getting-started.mp4)
