@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Provider } from 'react-redux';
 import { Container } from "react-bootstrap";
 import { Switch, Route, Redirect } from "react-router-dom";
@@ -14,6 +15,17 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
+    // JSX is like HTML syntax
+    // JSX defines a "React element" - an object which defines the user interface
+    const [ theme, setTheme ] = useState( 'light' );
+
+    const toggleTheme = () => setTheme( t => t === 'light' ? 'dark' : 'light' );
+
+    const value = {
+        theme,
+        toggleTheme
+    };
+
     return (
         <Provider store={store}>
             <div id="app" title="Workshops App">

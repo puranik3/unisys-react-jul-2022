@@ -13,7 +13,7 @@ https://www.youtube.com/watch?v=U-iz8b4RExA
 
 ## Videos
 - [Protected routes and authentication with React Router v5](https://www.youtube.com/watch?v=kByiWTWdpww&t=435s)
-- Redux with class API
+- ```Newly added!``` [Redux with class API](https://corporate-trainings.s3.amazonaws.com/unisys/using-redux-with-class-components.mp4)
 - [React Internationalisation (i18n) with React-Intl example.](https://www.youtube.com/watch?v=XcvZPWz510k)
 - [Localise React Applications Using I18Next](https://www.youtube.com/watch?v=txHU6lrsa3o)
 

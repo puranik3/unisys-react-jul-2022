@@ -13,7 +13,7 @@ const mapDispatchToProps = ( dispatch ) => {
         toggleTheme() {
             dispatch( toggleTheme() );
         }
-    };
-};
+    }
+}
 
 export default connect( mapStateToProps, mapDispatchToProps )( Menu );
