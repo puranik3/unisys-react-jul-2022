@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useParams, Switch, Route, Redirect } from 'react-router-dom';
-import { Row, Col, Image } from 'react-bootstrap';
+import { Alert, Row, Col, Image } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
     faCheck,
@@ -13,9 +13,11 @@ import AddSession from './AddSession';
 
 import { getWorkshopById } from '../../../services/workshops';
 import { toast } from 'react-toastify';
+import { useSelector } from 'react-redux';
 
-const WorkshopDetails = ( { theme } ) => {
+const WorkshopDetails = () => {
     const format = "DD-MM-yyyy";
+    const theme = useSelector( state => state.themeState.theme );
 
     const { id } = useParams(); // { id: '2', action: 'edit' }
 
